@@ -8,7 +8,7 @@ interface MenuItemProps {
 export const MenuItem = ({ children, className }: MenuItemProps) => {
   return (
     <li>
-      <div className={className}>{children}</div>
+      <div className={`w-full ${className}`}>{children}</div>
     </li>
   );
 };
