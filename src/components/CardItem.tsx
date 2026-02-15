@@ -1,10 +1,10 @@
-import type { ReactNode } from "react";
-import { noop } from "../utils/util";
+import { CardType, type StaticCardProps } from "../model/card.model";
+import { CardItemNavigable } from "./CardItemNavigable";
 
 export interface CardItemProps {
-  children: ReactNode;
+  cardType: CardType;
   className?: string;
-  onCardClick?: () => void;
+  cardSpecificProps: StaticCardProps;
 }
 
 /* 
@@ -15,15 +15,29 @@ export interface CardItemProps {
  */
 export const CardItem = ({
   className,
-  children,
-  onCardClick,
+  cardType,
+  cardSpecificProps,
 }: CardItemProps) => {
+  const renderCard = () => {
+    switch (cardType) {
+      case CardType.NAVIGABLE:
+        return <CardItemNavigable {...cardSpecificProps} />;
+      case CardType.SWITCHABLE:
+        return <></>;
+      case CardType.CALANDER_BASED:
+        return <></>;
+      case CardType.STATIC:
+        return <></>;
+      default:
+        return;
+    }
+  };
+
   return (
     <div
-      className={`flex h-20 justify-between items-center px-8 bg-gray-100 border-b border-gray-300 hover:bg-gray-300 ${className}`}
-      onClick={onCardClick ? onCardClick : noop}
+      className={`flex w-full h-20 px-8 bg-gray-100 border-b border-gray-300 hover:bg-gray-300 ${className}`}
     >
-      {children}
+      {renderCard()}
     </div>
   );
 };
